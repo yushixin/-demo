@@ -5,20 +5,34 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    movieList: []
   },
-
+  getMovieList: function () {
+    wx.showLoading({
+      title: '加载中',
+    })
+    wx.cloud.callFunction({
+      name: 'movielist',
+      data: {
+        start: this.data.movieList.length,
+        count: 10
+      }
+    }).then(res => {
+      // console.log(res);
+      this.setData({
+        movieList: this.data.movieList.concat(JSON.parse(res.result).subjects)
+      });
+      wx.hideLoading();
+    }).catch(err => {
+      console.error(err);
+      wx.hideLoading();
+    });
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.cloud.callFunction({
-      name: 'movielist'
-    }).then(res => {
-      console.log(res);
-    }).catch(err => {
-      console.error(err);
-    });
+    this.getMovieList();
   },
 
   /**
@@ -60,6 +74,7 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
+    this.getMovieList();
 
   },
 
