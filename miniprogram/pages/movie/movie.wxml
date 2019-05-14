@@ -3,10 +3,10 @@
   <view class="movie-info">
     <view class="movie-title">{{item.title}}</view>
     <view>观众评分：
-      <text class="movie-score"> {{item.rating.average}}分</text>
+      <text class="movie-score"> {{item.average}}分</text>
     </view>
     <view>主演：
-      <text wx:key="{{index}}" wx:for="{{item.casts}}">{{item.name}} </text>
+      <text>{{item.name}} </text>
     </view>
     <view>年份: {{item.year}}</view>
   </view>

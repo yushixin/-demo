@@ -1,4 +1,7 @@
 // pages/movie/movie.js
+
+var API = require('../../utils/util.js')
+
 Page({
 
   /**
@@ -38,7 +41,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getMovieList();
+    // this.getMovieList();
+
+    var that = this;
+    API.ajax('', function (res) {
+      console.log(res);
+      that.setData({
+        movieList: that.data.movieList.concat(res.data)
+      });
+    })
+
+
   },
 
   /**
